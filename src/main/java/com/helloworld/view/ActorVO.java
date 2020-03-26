@@ -1,30 +1,20 @@
-package com.helloworld.entity;
+package com.helloworld.view;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "actor")
-public class ActorEntity implements Serializable {
+public class ActorVO implements Serializable {
 
-	private static final long serialVersionUID = -7742624713470752195L;
+	private static final long serialVersionUID = 2712387406223494017L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "actor_id", nullable = false)
 	private Integer actorId;
-	@Column(name = "first_name", nullable = false)
+	@NotBlank(message = "First Name is required")
 	private String firstName;
-	@Column(name = "last_name", nullable = false)
+	@NotBlank(message = "Last Name is required")
 	private String lastName;
-	@Column(name = "last_update", nullable = false)
+
 	private ZonedDateTime lastUpdate;
 
 	public Integer getActorId() {

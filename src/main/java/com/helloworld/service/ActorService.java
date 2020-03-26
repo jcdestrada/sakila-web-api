@@ -1,24 +1,32 @@
 package com.helloworld.service;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.helloworld.entity.ActorEntity;
+import com.helloworld.model.Actor;
 import com.helloworld.repository.ActorRepository;
-import com.helloworld.vo.ActorVO;
+import com.helloworld.view.ActorVO;
 
 @Service
 public class ActorService {
 	@Autowired
 	private ActorRepository actorRepo;
+	
+	public String helloWorld() {
+		return "Hello World";
+	}
 
 	public List<ActorVO> retrieveAllActors() {
-		List<ActorEntity> entityList = actorRepo.findAll();
+		List<Actor> entityList = actorRepo.findAll();
 		List<ActorVO> voList = new ArrayList<ActorVO>();
 		entityList.stream().forEach(actor -> {
 			ActorVO actorVO = new ActorVO();
@@ -46,5 +54,28 @@ public class ActorService {
 			});
 		}
 		return voList;
+	}
+
+	@Transactional
+	public ActorVO addActor(ActorVO actorVORequest) {
+		Actor entity = new Actor();
+		BeanUtils.copyProperties(actorVORequest, entity);
+		entity.setActorId(null);
+		entity.setLastUpdate(ZonedDateTime.now());
+		entity = actorRepo.save(entity);
+		ActorVO actorVOResponse = new ActorVO();
+		BeanUtils.copyProperties(entity, actorVOResponse);
+		return actorVOResponse;
+	}
+
+	@Transactional
+	public void removeActor(Integer actorId) {
+		try {
+			actorRepo.deleteById(actorId);
+		} catch (DataAccessException dae) {
+			dae.getMessage();
+			dae.printStackTrace();
+			throw dae;
+		}
 	}
 }
