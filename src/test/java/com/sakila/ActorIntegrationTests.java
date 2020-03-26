@@ -1,4 +1,4 @@
-package com.helloworld;
+package com.sakila;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

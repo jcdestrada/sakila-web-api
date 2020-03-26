@@ -22,7 +22,7 @@ test {
 		//includeTestsMatching "*SomeTest.someSpecificFeature"
 
      	//specific test class
-     	includeTestsMatching "com.helloworld.ActorIntegrationTests"
+     	//includeTestsMatching "com.sakila.ActorIntegrationTests"
 
      	//specific test class, wildcard for packages
      	//includeTestsMatching "*.SomeTest"
@@ -31,7 +31,7 @@ test {
      	//includeTestsMatching "com.gradle.tooling.*"
 
      	//all integration tests, by naming convention
-     	//includeTestsMatching "*IntegrationTests"
+     	includeTestsMatching "*IntegrationTests"
 
      	//only ui tests from integration tests, by some naming convention
      	//includeTestsMatching "*IntegTest*ui"
