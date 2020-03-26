@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.helloworld.controller.ActorController;
-import com.helloworld.controller.HelloWorldController;
+import com.sakila.controller.ActorController;
+import com.sakila.controller.HelloWorldController;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,4 +1,4 @@
-package com.helloworld.controller;
+package com.sakila.controller;
 
 import java.util.List;
 
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.helloworld.service.ActorService;
-import com.helloworld.view.ActorVO;
+import com.sakila.service.ActorService;
+import com.sakila.view.ActorVO;
 
 @RestController
 @RequestMapping("/actor")

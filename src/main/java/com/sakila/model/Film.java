@@ -1,4 +1,4 @@
-package com.helloworld.model;
+package com.sakila.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

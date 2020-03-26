@@ -30,8 +30,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.helloworld.service.ActorService;
-import com.helloworld.view.ActorVO;
+import com.sakila.service.ActorService;
+import com.sakila.view.ActorVO;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc

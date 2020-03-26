@@ -1,4 +1,4 @@
-package com.helloworld.service;
+package com.sakila.service;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -12,9 +12,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.helloworld.model.Actor;
-import com.helloworld.repository.ActorRepository;
-import com.helloworld.view.ActorVO;
+import com.sakila.model.Actor;
+import com.sakila.repository.ActorRepository;
+import com.sakila.view.ActorVO;
 
 @Service
 public class ActorService {

@@ -1,8 +1,7 @@
-package com.helloworld.model;
+package com.sakila.model;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,32 +10,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 
 /**
- * The persistent class for the customer database table.
+ * The persistent class for the staff database table.
  * 
  */
 @Entity
-@NamedQuery(name="Customer.findAll", query="SELECT c FROM Customer c")
-public class Customer implements Serializable {
+@NamedQuery(name="Staff.findAll", query="SELECT s FROM Staff s")
+public class Staff implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="customer_id")
-	private Integer customerId;
+	@Column(name="staff_id")
+	private byte staffId;
 
 	private byte active;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_date")
-	private Date createDate;
 
 	private String email;
 
@@ -49,6 +43,21 @@ public class Customer implements Serializable {
 	@Column(name="last_update")
 	private ZonedDateTime lastUpdate;
 
+	private String password;
+
+	@Lob
+	private byte[] picture;
+
+	private String username;
+
+	//bi-directional many-to-one association to Payment
+	@OneToMany(mappedBy="staff")
+	private List<Payment> payments;
+
+	//bi-directional many-to-one association to Rental
+	@OneToMany(mappedBy="staff")
+	private List<Rental> rentals;
+
 	//bi-directional many-to-one association to Address
 	@ManyToOne
 	@JoinColumn(name="address_id")
@@ -59,23 +68,19 @@ public class Customer implements Serializable {
 	@JoinColumn(name="store_id")
 	private Store store;
 
-	//bi-directional many-to-one association to Payment
-	@OneToMany(mappedBy="customer")
-	private List<Payment> payments;
+	//bi-directional many-to-one association to Store
+	@OneToMany(mappedBy="staff")
+	private List<Store> stores;
 
-	//bi-directional many-to-one association to Rental
-	@OneToMany(mappedBy="customer")
-	private List<Rental> rentals;
-
-	public Customer() {
+	public Staff() {
 	}
 
-	public Integer getCustomerId() {
-		return this.customerId;
+	public byte getStaffId() {
+		return this.staffId;
 	}
 
-	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
+	public void setStaffId(byte staffId) {
+		this.staffId = staffId;
 	}
 
 	public byte getActive() {
@@ -84,14 +89,6 @@ public class Customer implements Serializable {
 
 	public void setActive(byte active) {
 		this.active = active;
-	}
-
-	public Date getCreateDate() {
-		return this.createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
 	}
 
 	public String getEmail() {
@@ -126,6 +123,74 @@ public class Customer implements Serializable {
 		this.lastUpdate = lastUpdate;
 	}
 
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public byte[] getPicture() {
+		return this.picture;
+	}
+
+	public void setPicture(byte[] picture) {
+		this.picture = picture;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public List<Payment> getPayments() {
+		return this.payments;
+	}
+
+	public void setPayments(List<Payment> payments) {
+		this.payments = payments;
+	}
+
+	public Payment addPayment(Payment payment) {
+		getPayments().add(payment);
+		payment.setStaff(this);
+
+		return payment;
+	}
+
+	public Payment removePayment(Payment payment) {
+		getPayments().remove(payment);
+		payment.setStaff(null);
+
+		return payment;
+	}
+
+	public List<Rental> getRentals() {
+		return this.rentals;
+	}
+
+	public void setRentals(List<Rental> rentals) {
+		this.rentals = rentals;
+	}
+
+	public Rental addRental(Rental rental) {
+		getRentals().add(rental);
+		rental.setStaff(this);
+
+		return rental;
+	}
+
+	public Rental removeRental(Rental rental) {
+		getRentals().remove(rental);
+		rental.setStaff(null);
+
+		return rental;
+	}
+
 	public Address getAddress() {
 		return this.address;
 	}
@@ -142,48 +207,26 @@ public class Customer implements Serializable {
 		this.store = store;
 	}
 
-	public List<Payment> getPayments() {
-		return this.payments;
+	public List<Store> getStores() {
+		return this.stores;
 	}
 
-	public void setPayments(List<Payment> payments) {
-		this.payments = payments;
+	public void setStores(List<Store> stores) {
+		this.stores = stores;
 	}
 
-	public Payment addPayment(Payment payment) {
-		getPayments().add(payment);
-		payment.setCustomer(this);
+	public Store addStore(Store store) {
+		getStores().add(store);
+		store.setStaff(this);
 
-		return payment;
+		return store;
 	}
 
-	public Payment removePayment(Payment payment) {
-		getPayments().remove(payment);
-		payment.setCustomer(null);
+	public Store removeStore(Store store) {
+		getStores().remove(store);
+		store.setStaff(null);
 
-		return payment;
-	}
-
-	public List<Rental> getRentals() {
-		return this.rentals;
-	}
-
-	public void setRentals(List<Rental> rentals) {
-		this.rentals = rentals;
-	}
-
-	public Rental addRental(Rental rental) {
-		getRentals().add(rental);
-		rental.setCustomer(this);
-
-		return rental;
-	}
-
-	public Rental removeRental(Rental rental) {
-		getRentals().remove(rental);
-		rental.setCustomer(null);
-
-		return rental;
+		return store;
 	}
 
 }

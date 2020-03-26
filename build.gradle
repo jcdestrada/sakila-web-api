@@ -13,11 +13,37 @@ repositories {
 	mavenCentral()
 }
 
+test {
+	filter {
+		//specific test method
+		//includeTestsMatching "org.gradle.SomeTest.someSpecificFeature"
+
+     	//specific test method, use wildcard for packages
+		//includeTestsMatching "*SomeTest.someSpecificFeature"
+
+     	//specific test class
+     	includeTestsMatching "com.helloworld.ActorIntegrationTests"
+
+     	//specific test class, wildcard for packages
+     	//includeTestsMatching "*.SomeTest"
+
+     	//all classes in package, recursively
+     	//includeTestsMatching "com.gradle.tooling.*"
+
+     	//all integration tests, by naming convention
+     	//includeTestsMatching "*IntegrationTests"
+
+     	//only ui tests from integration tests, by some naming convention
+     	//includeTestsMatching "*IntegTest*ui"
+	}
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	//implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+	implementation 'org.hibernate:hibernate-spatial'
 	runtimeOnly 'mysql:mysql-connector-java'
 	runtimeOnly 'org.postgresql:postgresql'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'

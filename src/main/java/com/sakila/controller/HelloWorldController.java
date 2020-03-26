@@ -1,4 +1,4 @@
-package com.helloworld.controller;
+package com.sakila.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

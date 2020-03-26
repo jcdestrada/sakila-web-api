@@ -1,4 +1,4 @@
-package com.helloworld.view;
+package com.sakila.view;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
