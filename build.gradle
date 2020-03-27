@@ -14,6 +14,7 @@ repositories {
 }
 
 test {
+	useJUnitPlatform()
 	filter {
 		//specific test method
 		//includeTestsMatching "org.gradle.SomeTest.someSpecificFeature"
@@ -51,8 +52,4 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testImplementation 'org.springframework.security:spring-security-test'
-}
-
-test {
-	useJUnitPlatform()
 }

@@ -48,11 +48,15 @@ class ActorIntegrationTests {
 	@MockBean
 	private ActorService mockService;
 
-	private TestRestTemplate testRestTemplate;
-	private static String ACTOR_ALL = "/actor/all";
-	private static String ACTOR_SEARCH_NAME = "actor/search/{name}";
-	private static String ACTOR_SEARCH_ID = "actor/id/{id}";
 
+
+	private TestRestTemplate testRestTemplate;
+	private static String API_ROOT = "api/";
+	private static String ACTOR_ALL = API_ROOT + "actor/all";
+	private static String ACTOR_SEARCH_NAME = API_ROOT + "actor/search/{name}";
+	private static String ACTOR_SEARCH_ID = API_ROOT + "actor/id/{id}";
+	private static String ACTOR_HELLOWORLD = API_ROOT + "actor/helloworld";
+	
 	@BeforeAll
 	void setUp() {
 		testRestTemplate = new TestRestTemplate();
@@ -62,7 +66,7 @@ class ActorIntegrationTests {
 	public void actorHelloWorld() throws Exception {
 		when(mockService.helloWorld()).thenReturn("Hello World");
 
-		this.mockMvc.perform(get("/actor/helloworld")).andDo(print()).andExpect(status().isOk())
+		this.mockMvc.perform(get(ACTOR_HELLOWORLD)).andDo(print()).andExpect(status().isOk())
 				.andExpect((content().string("Hello World")));
 
 	}
@@ -71,7 +75,7 @@ class ActorIntegrationTests {
 	public void actorAllResponseOK() throws Exception {
 		ParameterizedTypeReference<List<ActorVO>> myBean = new ParameterizedTypeReference<List<ActorVO>>() {
 		};
-		ResponseEntity<List<ActorVO>> response = testRestTemplate.exchange(createURLWithPort("/actor/all"),
+		ResponseEntity<List<ActorVO>> response = testRestTemplate.exchange(createURLWithPort(ACTOR_ALL),
 				HttpMethod.GET, null, myBean);
 		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
 	}
@@ -113,9 +117,8 @@ class ActorIntegrationTests {
 		String expected = objectMapper.writeValueAsString(expectedObject);
 		System.out.println("actual");
 		System.out.println(actual);
-		System.out.println("expected");
+		System.out.println("expected");	
 		System.out.println(expected);
-
 		JSONAssert.assertEquals(expected, actual, false);
 	}
 

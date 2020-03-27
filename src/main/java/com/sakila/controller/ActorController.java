@@ -20,7 +20,7 @@ import com.sakila.service.ActorService;
 import com.sakila.view.ActorVO;
 
 @RestController
-@RequestMapping("/actor")
+@RequestMapping("/api/actor")
 public class ActorController {
 	@Autowired
 	private ActorService actorService;
