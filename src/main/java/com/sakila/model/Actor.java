@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import com.sakila.view.ActorVO;
+
 
 /**
  * The persistent class for the actor database table.
@@ -94,6 +96,11 @@ public class Actor implements Serializable {
 		filmActor.setActor(null);
 
 		return filmActor;
+	}
+	
+	public ActorVO toViewObject() {
+		ActorVO viewObject = new ActorVO(this);
+		return viewObject;
 	}
 
 }

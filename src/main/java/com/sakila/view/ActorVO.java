@@ -5,8 +5,25 @@ import java.time.ZonedDateTime;
 
 import javax.validation.constraints.NotBlank;
 
-public class ActorVO implements Serializable {
+import org.springframework.beans.BeanUtils;
 
+import com.sakila.model.Actor;
+
+public class ActorVO implements Serializable {
+//	public ActorVO(){
+//		
+//	}
+	
+	public ActorVO(Actor entity){
+		BeanUtils.copyProperties(entity, this);
+	}
+	
+	public Actor toEntity(){
+		Actor entity = new Actor();
+		BeanUtils.copyProperties(this, entity);
+		return entity;
+	}
+	
 	private static final long serialVersionUID = 2712387406223494017L;
 
 	private Integer actorId;

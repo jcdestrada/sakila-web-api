@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sakila.exception.SakilaException;
 import com.sakila.service.ActorService;
 import com.sakila.view.ActorVO;
 
@@ -29,19 +30,21 @@ public class ActorController {
 	public @ResponseBody String helloWorld() {
 		return actorService.helloWorld();
 	}
-	
+
 	@RequestMapping("/all")
-	public @ResponseBody List<ActorVO> retrieveAllActors() {
+	public @ResponseBody List<ActorVO> retrieveAllActors() throws SakilaException {
 		return actorService.retrieveAllActors();
+
 	}
 
 	@RequestMapping("/id/{actorId}")
-	public @ResponseBody ActorVO retrieveActorById(@PathVariable Integer actorId) {
+	public @ResponseBody ActorVO retrieveActorById(@PathVariable Integer actorId) throws SakilaException {
 		return actorService.retrieveActorById(actorId);
+
 	}
 
 	@RequestMapping("/search/{name}")
-	public @ResponseBody List<ActorVO> retrieveActorById(@PathVariable String name) {
+	public @ResponseBody List<ActorVO> retrieveActorById(@PathVariable String name) throws SakilaException {
 		return actorService.retrieveActorByName(name);
 	}
 
@@ -57,19 +60,20 @@ public class ActorController {
 		}
 		return response;
 	}
-	
+
 	@PostMapping("/remove/{actorId}")
 	public ResponseEntity<String> removeActor(@PathVariable @NotNull Integer actorId) {
 		ResponseEntity<String> response = null;
 		try {
 			actorService.removeActor(actorId);
-			response = ResponseEntity.ok(String.format("Actor %s has been deleted successfully", actorId) );
+			response = ResponseEntity.ok(String.format("Actor %s has been deleted successfully", actorId));
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			response = new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ResponseEntity<String>(String.format("Unable to delete Actor %s", actorId), HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<String>(String.format("Unable to delete Actor %s", actorId),
+					HttpStatus.BAD_REQUEST);
 		}
 		return response;
 	}

@@ -32,8 +32,8 @@ test {
      	//includeTestsMatching "com.gradle.tooling.*"
 
      	//all integration tests, by naming convention
-     	includeTestsMatching "*IntegrationTests"
-
+     	//includeTestsMatching "*IntegrationTests"
+		includeTestsMatching "*UnitTests"
      	//only ui tests from integration tests, by some naming convention
      	//includeTestsMatching "*IntegTest*ui"
 	}
@@ -48,8 +48,10 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	runtimeOnly 'org.postgresql:postgresql'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+	testImplementation ('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+		exclude group: 'org.junit.platform', module: 'junit-platform-launcher'
 	}
-	testImplementation 'org.springframework.security:spring-security-test'
+    // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher
+	testImplementation group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.5.2'
 }

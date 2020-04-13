@@ -2,13 +2,12 @@ package com.sakila;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sakila.view.ActorVO;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -19,19 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sakila.service.ActorService;
-import com.sakila.view.ActorVO;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -41,34 +33,17 @@ class ActorIntegrationTests {
 	private int port;
 
 	@Autowired
-	private MockMvc mockMvc;
-	@Autowired
 	private ObjectMapper objectMapper;
-
-	@MockBean
-	private ActorService mockService;
-
-
 
 	private TestRestTemplate testRestTemplate;
 	private static String API_ROOT = "api/";
 	private static String ACTOR_ALL = API_ROOT + "actor/all";
 	private static String ACTOR_SEARCH_NAME = API_ROOT + "actor/search/{name}";
 	private static String ACTOR_SEARCH_ID = API_ROOT + "actor/id/{id}";
-	private static String ACTOR_HELLOWORLD = API_ROOT + "actor/helloworld";
 	
 	@BeforeAll
 	void setUp() {
 		testRestTemplate = new TestRestTemplate();
-	}
-
-	@Test
-	public void actorHelloWorld() throws Exception {
-		when(mockService.helloWorld()).thenReturn("Hello World");
-
-		this.mockMvc.perform(get(ACTOR_HELLOWORLD)).andDo(print()).andExpect(status().isOk())
-				.andExpect((content().string("Hello World")));
-
 	}
 
 	@Test
