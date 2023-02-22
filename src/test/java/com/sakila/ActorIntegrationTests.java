@@ -5,18 +5,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.List;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sakila.view.ActorVO;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
@@ -25,24 +17,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sakila.view.ActorVO;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
-@TestInstance(Lifecycle.PER_CLASS)
 class ActorIntegrationTests {
-	@Value("8080")
-	private int port;
+	
+	
+    private static final int port = 8088;
 
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private TestRestTemplate testRestTemplate;
-	private static String API_ROOT = "api/";
+	private static TestRestTemplate testRestTemplate;
+	private static String API_ROOT = "/api/";
 	private static String ACTOR_ALL = API_ROOT + "actor/all";
 	private static String ACTOR_SEARCH_NAME = API_ROOT + "actor/search/{name}";
 	private static String ACTOR_SEARCH_ID = API_ROOT + "actor/id/{id}";
 	
 	@BeforeAll
-	void setUp() {
+	static void setUp() {
 		testRestTemplate = new TestRestTemplate();
 	}
 
@@ -129,13 +124,13 @@ class ActorIntegrationTests {
 
 	private String createURLWithPort(String path, Object uriVariableValues) {
 		System.out.println("http://localhost:" + port + path);
-		return UriComponentsBuilder.newInstance().scheme("http").host("localhost").port(8080).path(path)
+		return UriComponentsBuilder.newInstance().scheme("http").host("localhost").port(port).path(path)
 				.buildAndExpand(uriVariableValues).toUriString();
 	}
 
 	private String createURLWithPort(String path) {
 		System.out.println("http://localhost:" + port + path);
-		return UriComponentsBuilder.newInstance().scheme("http").host("localhost").port(8080).path(path).toUriString();
+		return UriComponentsBuilder.newInstance().scheme("http").host("localhost").port(port).path(path).toUriString();
 	}
 
 }

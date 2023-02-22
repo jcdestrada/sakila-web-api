@@ -48,7 +48,7 @@ public class ActorService {
 
 	public List<ActorVO> retrieveActorByName(String name) throws SakilaException {
 		List<ActorVO> voList = null;
-		if (!StringUtils.isEmpty(name)) {
+		if (!StringUtils.hasText(name)) {
 			voList = actorRepo.findByName(name).stream().map(actor -> new ActorVO(actor)).collect(Collectors.toList());
 		}
 		return voList;

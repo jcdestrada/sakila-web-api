@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,24 +27,24 @@ public class ActorController {
 	@Autowired
 	private ActorService actorService;
 
-	@RequestMapping("/helloworld")
+	@GetMapping("/helloworld")
 	public @ResponseBody String helloWorld() {
 		return actorService.helloWorld();
 	}
 
-	@RequestMapping("/all")
+	@GetMapping("/all")
 	public @ResponseBody List<ActorVO> retrieveAllActors() throws SakilaException {
 		return actorService.retrieveAllActors();
 
 	}
 
-	@RequestMapping("/id/{actorId}")
+	@GetMapping("/id/{actorId}")
 	public @ResponseBody ActorVO retrieveActorById(@PathVariable Integer actorId) throws SakilaException {
 		return actorService.retrieveActorById(actorId);
 
 	}
 
-	@RequestMapping("/search/{name}")
+	@GetMapping("/search/{name}")
 	public @ResponseBody List<ActorVO> retrieveActorById(@PathVariable String name) throws SakilaException {
 		return actorService.retrieveActorByName(name);
 	}

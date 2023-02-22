@@ -10,10 +10,7 @@ import org.springframework.beans.BeanUtils;
 import com.sakila.model.Actor;
 
 public class ActorVO implements Serializable {
-//	public ActorVO(){
-//		
-//	}
-	
+
 	public ActorVO(Actor entity){
 		BeanUtils.copyProperties(entity, this);
 	}
