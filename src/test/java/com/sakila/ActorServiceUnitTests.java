@@ -63,9 +63,9 @@ class ActorServiceUnitTests {
 			se = e;
 		}
 		assertThat("SakilaException is nulll", se, is(nullValue()));
-		assertThat("Exception is not null", voList, is(notNullValue()));
+		assertThat("voList is not null", voList, is(notNullValue()));
 		voList.stream().forEach(actor -> {
-			assertThat("Result should have PENELOPE", actor,
+			assertThat("Result should have RANDOM", actor,
 					anyOf(hasProperty("firstName", is("PENELOPE")), 
 							hasProperty("lastName", is("PENELOPE"))));
 		});
